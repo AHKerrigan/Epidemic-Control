@@ -1,35 +1,37 @@
 import networkx as nx
 import EoN
+from scipy import stats
+import matplotlib.pyplot as plt
 
 # Takes in a graph, as well as the number of simulations to run, and outputs the 
 # number of times each node ended up infected
 def times_infected(G, N):
 	tmax = 1
-	tau = 0.1 # transmission rate
-	gamma = 1.0 # recovery rate
-	rho = 0.01 # random fraction of initially infected
+	tau = 0.9 # transmission rate
+	gamma = 0.5 # recovery rate
+	rho = 0.1 # random fraction of initially infected
 
 	infected_hist = {}
 	for i in range(len(G)):
 		infected_hist[i] = 0
 	
 	for iteration in range(N):
+		print("Iteration - " + str(iteration) + ".....")
 		sim = EoN.fast_SIS(G, tau, gamma, rho=rho, return_full_data=True)
-		results = 
-		print(results)
+		results = sim.get_statuses()
+		for node in results:
+			if results[node] == 'I':
+				infected_hist[node] = infected_hist[node] + 1
+	return infected_hist
 	
+def centrality_z(G):
+	"""Takes in a graph, and returns an array of zscores corresponding to each 
+	node's relative centrality
+	"""
 
 
+G = nx.barabasi_albert_graph(1000, 8)
 
-G = nx.barabasi_albert_graph(500, 5)
-
-
-
-#iterations = 50
-
-#sim1 = EoN.fast_SIS(G, tau, gamma, rho=rho, return_full_data=True)
-#sim2 = EoN.fast_SIS(G, tau, gamma, rho=rho, return_full_data=True)
-#sim3 = EoN.fast_SIS(G, tau, gamma, rho=rho, return_full_data=True)
 
 #total_centrality = 0
 #centrality_dict = nx.degree_centrality(G)
@@ -45,4 +47,16 @@ G = nx.barabasi_albert_graph(500, 5)
 
 #for iteration in range(iterations):
 
-times_infected(G, 1)
+#nfection_hist = times_infected(G, 1000)
+#centrality_dict = nx.betweenness_centrality(G)
+#infection_hist_array = []
+#centrality = []
+#for i in range(len(G)):
+#	infection_hist_array.append(infection_hist[i])
+#	centrality.append(centrality_dict[i])
+#infection_zs = stats.zscore(infection_hist_array)
+
+
+#plot = plt.scatter(x = centrality, y=infection_zs)
+#plt.show()
+
