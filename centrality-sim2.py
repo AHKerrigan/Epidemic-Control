@@ -72,4 +72,4 @@ num_experiments = 4000
 # Network topology
 #g = nx.barabasi_albert_graph(N, 5)
 g = nx.erdos_renyi_graph(N, 0.01)
-full_centrality_experiment(g, sim_len, num_experiments, 0.01, 0.01)
+full_centrality_experiment(g, sim_len, num_experiments, 0.01, 0.01)     
